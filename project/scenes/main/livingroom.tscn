@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://bvuwrj4k1pt64"]
+
+[ext_resource type="PackedScene" uid="uid://bgwjwkuq61frl" path="res://scenes/livingroom/lr_m.tscn" id="2_brbbq"]
+[ext_resource type="PackedScene" uid="uid://c0iausf13iwj5" path="res://scenes/livingroom/cap_area.tscn" id="3_brbbq"]
+[ext_resource type="Script" uid="uid://cuhxebxtcy1p5" path="res://scripts/living.gd" id="3_ctrl"]
+[ext_resource type="VideoStream" uid="uid://cxjekytuqcful" path="res://resources/video/instance2.ogv" id="4_video"]
+[ext_resource type="PackedScene" uid="uid://cxil1axf0n68x" path="res://scenes/livingroom/flower_area.tscn" id="5_gwgse"]
+[ext_resource type="PackedScene" path="res://scenes/all/scene_button.tscn" id="6_btn"]
+
+[node name="Livingroom" type="Node2D" unique_id=1576170856]
+script = ExtResource("3_ctrl")
+
+[node name="lr_m" parent="." unique_id=135802080 instance=ExtResource("2_brbbq")]
+position = Vector2(576, 324)
+scale = Vector2(0.5625, 0.5625)
+
+[node name="CapArea" parent="." unique_id=1513448199 instance=ExtResource("3_brbbq")]
+position = Vector2(735, 452.99997)
+scale = Vector2(0.36, 0.36)
+
+[node name="FlowerArea" parent="." unique_id=1992521838 instance=ExtResource("5_gwgse")]
+position = Vector2(830, 272)
+scale = Vector2(0.15, 0.15)
+
+[node name="CapLayer" type="CanvasLayer" parent="." unique_id=2080907583]
+
+[node name="CapRemember" type="ColorRect" parent="CapLayer" unique_id=1407220348]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="CapLayer" unique_id=552027336]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("4_video")
+
+[node name="ButtonLayer" type="CanvasLayer" parent="."]
+
+[node name="BedroomButton" parent="ButtonLayer" instance=ExtResource("6_btn")]
+offset_left = 1092.0
+offset_top = 252.0
+offset_right = 1142.0
+offset_bottom = 396.0
+text = "卧\n室"

@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://b2esdle3em30w"]
+
+[ext_resource type="Script" uid="uid://dv24j8mamwx2s" path="res://scripts/photos.gd" id="1_hvqx5"]
+[ext_resource type="Texture2D" uid="uid://cdr8y1pav763d" path="res://resources/photos/photos1.png" id="1_jy2in"]
+[ext_resource type="VideoStream" uid="uid://cxjekytuqcful" path="res://resources/video/instance2.ogv" id="2_spwv5"]
+[ext_resource type="PackedScene" path="res://scenes/all/scene_button.tscn" id="4_btn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_click"]
+size = Vector2(200, 200)
+
+[node name="Photos" type="Node2D" unique_id=1959878143]
+script = ExtResource("1_hvqx5")
+
+[node name="ClickArea" type="Area2D" parent="." unique_id=129791186]
+position = Vector2(576, 280)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea" unique_id=1818907480]
+shape = SubResource("RectangleShape2D_click")
+
+[node name="CapLayer" type="CanvasLayer" parent="." unique_id=1333866206]
+
+[node name="CapRemember" type="ColorRect" parent="CapLayer" unique_id=1333129148]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="CapLayer" unique_id=1953123837]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_spwv5")
+
+[node name="BG" type="Sprite2D" parent="." unique_id=547243117]
+position = Vector2(576, 324)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("1_jy2in")
+
+[node name="ButtonLayer" type="CanvasLayer" parent="." unique_id=153077351]
+
+[node name="ReturnButton" parent="ButtonLayer" unique_id=1732310214 instance=ExtResource("4_btn")]
+offset_left = 512.0
+offset_top = 580.0
+offset_right = 640.0
+offset_bottom = 630.0
+text = "返回"

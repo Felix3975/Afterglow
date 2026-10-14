@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://c7xdnujiwkdw1"]
+
+[ext_resource type="Script" uid="uid://b44kjmf5s1gk6" path="res://scripts/study.gd" id="1_8qroh"]
+[ext_resource type="Texture2D" uid="uid://b55y1gtgr4ckh" path="res://resources/photos/study1.png" id="1_jdxj0"]
+[ext_resource type="PackedScene" path="res://scenes/all/scene_button.tscn" id="2_btn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ckujq"]
+size = Vector2(680, 424)
+
+[node name="Study" type="Node2D" unique_id=1558053037]
+script = ExtResource("1_8qroh")
+
+[node name="BG" type="Sprite2D" parent="." unique_id=123853973]
+position = Vector2(575.99994, 323.99994)
+scale = Vector2(0.56249994, 0.56249994)
+texture = ExtResource("1_jdxj0")
+
+[node name="Book" type="Area2D" parent="." unique_id=66777806]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Book" unique_id=1850372217]
+position = Vector2(500, 284)
+shape = SubResource("RectangleShape2D_ckujq")
+
+[node name="CapLayer" type="CanvasLayer" parent="."]
+
+[node name="CapRemember" type="ColorRect" parent="CapLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ButtonLayer" type="CanvasLayer" parent="."]
+
+[node name="BedroomButton" parent="ButtonLayer" instance=ExtResource("2_btn")]
+offset_left = 10.0
+offset_top = 252.0
+offset_right = 60.0
+offset_bottom = 396.0
+text = "卧
+室"
