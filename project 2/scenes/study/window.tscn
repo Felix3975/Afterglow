@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://nin3bddbdjrf"]
+
+[ext_resource type="PackedScene" uid="uid://dm5h8bywiqgve" path="res://scenes/bedroom/window_area.tscn" id="1_bnug2"]
+
+[node name="Window" type="Node2D" unique_id=946114102]
+
+[node name="WindowBackground" parent="." unique_id=1178477610 instance=ExtResource("1_bnug2")]
+position = Vector2(576, 324)
+scale = Vector2(0.563, 0.563)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1089673246]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1235907542]

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dj7e2klndojiu"]
+
+[ext_resource type="Texture2D" uid="uid://b55y1gtgr4ckh" path="res://resources/photos/study1.png" id="1_8nmdf"]
+[ext_resource type="Texture2D" uid="uid://bvq8uhvscnsx7" path="res://resources/photos/study2.png" id="2_n8g4b"]
+[ext_resource type="Texture2D" uid="uid://dkf7551bpvql5" path="res://resources/photos/study3.png" id="3_8jla2"]
+
+[node name="StudyBackground" type="Node2D" unique_id=495010570]
+
+[node name="1" type="Sprite2D" parent="." unique_id=367929193]
+texture = ExtResource("1_8nmdf")
+
+[node name="2" type="Sprite2D" parent="." unique_id=398393830]
+visible = false
+texture = ExtResource("2_n8g4b")
+
+[node name="3" type="Sprite2D" parent="." unique_id=1994963013]
+visible = false
+texture = ExtResource("3_8jla2")

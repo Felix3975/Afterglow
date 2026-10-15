@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bgwjwkuq61frl"]
+
+[ext_resource type="Texture2D" uid="uid://c2olkh5xqpvcs" path="res://resources/photos/livingroom1.png" id="1_0yj58"]
+[ext_resource type="Texture2D" uid="uid://dap11cm64eg7d" path="res://resources/photos/livingroom2.png" id="2_02a1m"]
+[ext_resource type="Texture2D" uid="uid://cl762itxdlcbg" path="res://resources/photos/livingroom3.png" id="3_20qam"]
+
+[node name="LivingroomBackground" type="Node2D" unique_id=1966095212]
+
+[node name="1" type="Sprite2D" parent="." unique_id=1217929213]
+texture = ExtResource("1_0yj58")
+
+[node name="2" type="Sprite2D" parent="." unique_id=515621979]
+visible = false
+texture = ExtResource("2_02a1m")
+
+[node name="3" type="Sprite2D" parent="." unique_id=1676788545]
+visible = false
+texture = ExtResource("3_20qam")

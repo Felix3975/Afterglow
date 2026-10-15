@@ -1,0 +1,50 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/note_inside.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://resources/photos/noteinside.png" id="2_bg"]
+[ext_resource type="VideoStream" uid="uid://cxjekytuqcful" path="res://resources/video/instance2.ogv" id="3_video"]
+[ext_resource type="PackedScene" path="res://scenes/all/scene_button.tscn" id="4_btn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_click"]
+size = Vector2(778, 532)
+
+[node name="NoteInside" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="BG" type="Sprite2D" parent="."]
+texture = ExtResource("2_bg")
+
+[node name="ClickArea" type="Area2D" parent="."]
+position = Vector2(576, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
+shape = SubResource("RectangleShape2D_click")
+
+[node name="CapLayer" type="CanvasLayer" parent="."]
+
+[node name="CapRemember" type="ColorRect" parent="CapLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="CapLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("3_video")
+
+[node name="ButtonLayer" type="CanvasLayer" parent="."]
+
+[node name="ReturnButton" parent="ButtonLayer" instance=ExtResource("4_btn")]
+offset_left = 512.0
+offset_top = 580.0
+offset_right = 640.0
+offset_bottom = 630.0
+text = "返回"

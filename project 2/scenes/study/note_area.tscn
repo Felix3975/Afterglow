@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://drvxs03gqmxp3"]
+
+[ext_resource type="Texture2D" uid="uid://dgi5hn7s56bk2" path="res://resources/photos/noteoutside.png" id="1_uo1d1"]
+
+[node name="NoteArea" type="Area2D" unique_id=545305398]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=142147952]
+texture = ExtResource("1_uo1d1")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=69523284]
+polygon = PackedVector2Array(5, -612, 1087, 142, -111, 623, -1058, -324)

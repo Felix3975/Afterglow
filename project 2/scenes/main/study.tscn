@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://c7xdnujiwkdw1"]
+
+[ext_resource type="Script" uid="uid://b44kjmf5s1gk6" path="res://scripts/study.gd" id="1_8qroh"]
+[ext_resource type="Texture2D" uid="uid://b55y1gtgr4ckh" path="res://resources/photos/study1.png" id="2_bg1"]
+[ext_resource type="PackedScene" path="res://scenes/all/scene_button.tscn" id="2_btn"]
+[ext_resource type="Texture2D" uid="uid://bvq8uhvscnsx7" path="res://resources/photos/study2.png" id="3_bg2"]
+[ext_resource type="Texture2D" uid="uid://dkf7551bpvql5" path="res://resources/photos/study3.png" id="4_bg3"]
+[ext_resource type="PackedScene" uid="uid://drvxs03gqmxp3" path="res://scenes/study/note_area.tscn" id="6_0el6t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ckujq"]
+size = Vector2(680, 424)
+
+[node name="Study" type="Node2D" unique_id=1558053037]
+script = ExtResource("1_8qroh")
+
+[node name="study1" type="Sprite2D" parent="." unique_id=495010571]
+position = Vector2(576, 324)
+scale = Vector2(0.563, 0.563)
+texture = ExtResource("2_bg1")
+
+[node name="study2" type="Sprite2D" parent="." unique_id=495010572]
+visible = false
+position = Vector2(576, 324)
+scale = Vector2(0.563, 0.563)
+texture = ExtResource("3_bg2")
+
+[node name="study3" type="Sprite2D" parent="." unique_id=495010573]
+visible = false
+position = Vector2(576, 324)
+scale = Vector2(0.563, 0.563)
+texture = ExtResource("4_bg3")
+
+[node name="Book" type="Area2D" parent="." unique_id=66777806]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Book" unique_id=1850372217]
+position = Vector2(500, 284)
+shape = SubResource("RectangleShape2D_ckujq")
+
+[node name="NoteArea" parent="." unique_id=545305398 instance=ExtResource("6_0el6t")]
+position = Vector2(842, 540)
+scale = Vector2(0.08, 0.08)
+
+[node name="CapLayer" type="CanvasLayer" parent="." unique_id=120596127]
+
+[node name="CapRemember" type="ColorRect" parent="CapLayer" unique_id=1199672391]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ButtonLayer" type="CanvasLayer" parent="." unique_id=1246667198]
+
+[node name="BedroomButton" parent="ButtonLayer" unique_id=1642392855 instance=ExtResource("2_btn")]
+offset_left = 10.0
+offset_top = 252.0
+offset_right = 60.0
+offset_bottom = 396.0
+text = "卧
+室"

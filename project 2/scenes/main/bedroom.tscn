@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://iipt77xdxlfd"]
+
+[ext_resource type="Script" uid="uid://cqmumnpnr77va" path="res://scripts/bedroom.gd" id="1_osqyx"]
+[ext_resource type="Texture2D" uid="uid://c025priaril06" path="res://resources/photos/bedroom1.png" id="2_bg1"]
+[ext_resource type="Texture2D" uid="uid://ja1qdhgneae1" path="res://resources/photos/bedroom2.png" id="3_bg2"]
+[ext_resource type="Texture2D" uid="uid://dhnn7j4x3hccy" path="res://resources/photos/bedroom3.png" id="4_bg3"]
+[ext_resource type="PackedScene" path="res://scenes/all/scene_button.tscn" id="5_btn"]
+[ext_resource type="Texture2D" uid="uid://bkld0ib6xaduc" path="res://resources/photos/letter.png" id="5_gn84r"]
+[ext_resource type="PackedScene" uid="uid://bm5mf7uoj8vql" path="res://scenes/bedroom/fistts_photo_area.tscn" id="7_dy0a7"]
+[ext_resource type="VideoStream" uid="uid://cxjekytuqcful" path="res://resources/video/instance2.ogv" id="8_video"]
+
+[node name="Bedroom" type="Node2D" unique_id=1388940584]
+script = ExtResource("1_osqyx")
+
+[node name="bedroom1" type="Sprite2D" parent="." unique_id=1347086797]
+position = Vector2(576, 324)
+scale = Vector2(0.563, 0.563)
+texture = ExtResource("2_bg1")
+
+[node name="bedroom2" type="Sprite2D" parent="." unique_id=1347086798]
+visible = false
+position = Vector2(576, 324)
+scale = Vector2(0.563, 0.563)
+texture = ExtResource("3_bg2")
+
+[node name="bedroom3" type="Sprite2D" parent="." unique_id=1347086799]
+visible = false
+position = Vector2(576, 324)
+scale = Vector2(0.563, 0.563)
+texture = ExtResource("4_bg3")
+
+[node name="WindowArea" type="Area2D" parent="." unique_id=60936253]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WindowArea" unique_id=1785545844]
+polygon = PackedVector2Array(571, 133, 566, 343, 817, 340, 811, 117)
+
+[node name="LetterArea" type="Area2D" parent="." unique_id=1817246131]
+
+[node name="Letter" type="Sprite2D" parent="LetterArea" unique_id=1293213392]
+position = Vector2(1073, 448)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("5_gn84r")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LetterArea" unique_id=89225084]
+polygon = PackedVector2Array(1017, 417, 1087, 404, 1126, 470, 1049, 496)
+
+[node name="CapLayer" type="CanvasLayer" parent="." unique_id=228622554]
+
+[node name="CapRemember" type="ColorRect" parent="CapLayer" unique_id=624946239]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="CapLayer" unique_id=1953123840]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("8_video")
+
+[node name="ButtonLayer" type="CanvasLayer" parent="." unique_id=462267203]
+
+[node name="LivingroomButton" parent="ButtonLayer" unique_id=711149744 instance=ExtResource("5_btn")]
+offset_left = 10.0
+offset_top = 252.0
+offset_right = 60.0
+offset_bottom = 396.0
+text = "客
+厅"
+
+[node name="StudyButton" parent="ButtonLayer" unique_id=881234567 instance=ExtResource("5_btn")]
+offset_left = 1092.0
+offset_top = 252.0
+offset_right = 1142.0
+offset_bottom = 396.0
+text = "书
+房"
+
+[node name="FisttsPhotoArea" parent="." unique_id=915368663 instance=ExtResource("7_dy0a7")]
+position = Vector2(262, 189.99998)
+rotation = 0.07679449
+scale = Vector2(0.08, 0.08)

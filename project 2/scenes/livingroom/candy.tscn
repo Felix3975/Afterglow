@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dfffso8t063x3"]
+
+[ext_resource type="Texture2D" uid="uid://dv38neiewlyuw" path="res://resources/photos/candy.png" id="1_b8xk8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ckujq"]
+size = Vector2(20, 22.216312)
+
+[node name="Candy" type="Area2D" unique_id=558849287]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=311409291]
+texture = ExtResource("1_b8xk8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2055757475]
+position = Vector2(0, 3.4999619)
+scale = Vector2(38.359997, 56.4)
+shape = SubResource("RectangleShape2D_ckujq")

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bm5mf7uoj8vql"]
+
+[ext_resource type="Texture2D" uid="uid://csg5yusjpixhq" path="res://resources/photos/firsttsphoto1.png" id="1_kalhn"]
+[ext_resource type="Texture2D" uid="uid://c6xvir1a73jkv" path="res://resources/photos/firsttsphoto2.png" id="2_55nxm"]
+
+[node name="FisttsPhotoArea" type="Area2D" unique_id=915368663]
+
+[node name="1" type="Sprite2D" parent="." unique_id=669954907]
+scale = Vector2(-1, 1)
+texture = ExtResource("1_kalhn")
+
+[node name="2" type="Sprite2D" parent="." unique_id=1871755383]
+position = Vector2(10.217825, 7.5965753)
+scale = Vector2(-1.356065, 1.3257796)
+texture = ExtResource("2_55nxm")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2054175223]
+polygon = PackedVector2Array(-552, -545, 563, -438, 572, 472, -539, 549)

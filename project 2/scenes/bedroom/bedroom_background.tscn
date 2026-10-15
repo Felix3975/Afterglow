@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dctkrgt3xlrwp"]
+
+[ext_resource type="Texture2D" uid="uid://c025priaril06" path="res://resources/photos/bedroom1.png" id="1_u0fd2"]
+[ext_resource type="Texture2D" uid="uid://ja1qdhgneae1" path="res://resources/photos/bedroom2.png" id="2_tdcdr"]
+[ext_resource type="Texture2D" uid="uid://dhnn7j4x3hccy" path="res://resources/photos/bedroom3.png" id="3_liect"]
+
+[node name="BedroomBackground" type="Node2D" unique_id=1347086796]
+
+[node name="1" type="Sprite2D" parent="." unique_id=2124976223]
+texture = ExtResource("1_u0fd2")
+
+[node name="2" type="Sprite2D" parent="." unique_id=1700993982]
+visible = false
+texture = ExtResource("2_tdcdr")
+
+[node name="3" type="Sprite2D" parent="." unique_id=121037391]
+visible = false
+texture = ExtResource("3_liect")
