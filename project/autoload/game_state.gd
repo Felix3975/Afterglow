@@ -2,21 +2,20 @@ extends Node
 # 全局阶段管理器（Autoload）
 # - 记录当前阶段与哪些记忆已观看
 # - 提供全局通知弹窗（右下角，类似 Steam 成就）
-# - 提供阶段切换遮罩（黑屏 → 正中文字 → 点击进入下一阶段）
+# - 提供阶段切换遮罩（黑屏 → 正中文字 → 2 秒后自动进入下一阶段）
 
 # ===== 阶段配置（后期加内容只改这里） =====
 const TOTAL_STAGES := 3
 # 每个阶段可点击的记忆 key 列表；不在当前列表里的 key 不可点击
 const STAGE_MEMORIES := {
-	1: ["cap", "flower", "window", "photo"],
-	2: [],
-	3: [],
+	1: ["cap", "flower", "photo", "firsttsphoto"],
+	2: ["candy", "window", "letter", "note"],
+	3: ["kite"],
 }
 
 # ===== 提示文案（后期改这里） =====
 const TEXT_WATCHED := "这段记忆已经看过了"
 const TEXT_NOT_IN_STAGE := "想不起更多了"
-const TEXT_STAGE_CLEAR := "文字"
 
 const FONT_PATH := "res://resources/font/乐米拾光手札体.ttf"
 const LIVINGROOM_SCENE := "res://scenes/main/livingroom.tscn"
@@ -31,10 +30,10 @@ const NOTIF_RIGHT_MARGIN := 20.0
 const NOTIF_FADE_IN := 0.2
 const NOTIF_LINGER := 0.8
 const NOTIF_FADE_OUT := 0.5
-const NOTIF_TOTAL := NOTIF_FADE_IN + NOTIF_LINGER + NOTIF_FADE_OUT
 
 # ===== 阶段切换参数 =====
 const STAGE_FADE_DURATION := 0.5
+const STAGE_TEXT_DURATION := 2.0
 
 # ===== 状态 =====
 var current_stage := 1
@@ -42,7 +41,6 @@ var _watched: Dictionary = {}
 var _notifications: Array[Control] = []
 var _skip_latest := false
 var _transitioning := false
-var _waiting_click := false
 
 
 # ===== 阶段 / 记忆查询 =====
@@ -81,6 +79,9 @@ func is_transitioning() -> bool:
 # ===== 阶段完成检查（房间入场渐入完成后调用） =====
 
 func check_and_start_stage_transition() -> void:
+	# 最终阶段看完所有记忆后不做任何转场与后续反应（阶段 3 的结束单独做，暂空）
+	if current_stage >= TOTAL_STAGES:
+		return
 	if _transitioning:
 		return
 	if not is_stage_complete():
@@ -90,34 +91,25 @@ func check_and_start_stage_transition() -> void:
 
 func _start_stage_transition() -> void:
 	_transitioning = true
-	# 1. 先弹提示
-	show_notification(TEXT_STAGE_CLEAR)
 	var fade: ColorRect = $TransitionLayer/Fade
 	var text: Label = $TransitionLayer/Text
 	fade.visible = true
 	fade.color.a = 0.0
 	text.visible = false
 	var tween := create_tween()
-	# 2. 等提示展示完
-	tween.tween_interval(NOTIF_TOTAL)
-	# 3. 黑屏渐入
+	# 1. 短停顿
+	tween.tween_interval(0.3)
+	# 2. 黑屏渐入
 	tween.tween_property(fade, "color:a", 1.0, STAGE_FADE_DURATION)
-	# 4. 正中显示文字，等待点击
+	# 3. 正中显示文字，2 秒后自动进入下一阶段
 	tween.tween_callback(func() -> void:
 		text.visible = true
-		_waiting_click = true
 	)
-
-
-func _input(event: InputEvent) -> void:
-	if not _waiting_click:
-		return
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_continue_to_next_stage()
+	tween.tween_interval(STAGE_TEXT_DURATION)
+	tween.tween_callback(_continue_to_next_stage)
 
 
 func _continue_to_next_stage() -> void:
-	_waiting_click = false
 	advance_stage()
 	get_tree().change_scene_to_file(LIVINGROOM_SCENE)
 	var fade: ColorRect = $TransitionLayer/Fade

@@ -4,6 +4,7 @@ const FADE_DURATION := 1.0
 const ENTRANCE_FADE_DURATION := 0.5
 const NOTE_PAUSE := 0.5
 const STUDY_SCENE := "res://scenes/main/study.tscn"
+const NOTE_INSIDE_SCENE := "res://scenes/study/note_inside.tscn"
 
 # 各可点击物的 key（需与 GameState.STAGE_MEMORIES 中一致）
 const KEY_NOTE := "note"
@@ -32,7 +33,7 @@ func _fit_background() -> void:
 	if tex == null:
 		return
 	var screen := get_viewport_rect().size
-	var s := min(screen.x / tex.get_width(), screen.y / tex.get_height())
+	var s: float = min(screen.x / tex.get_width(), screen.y / tex.get_height())
 	$BG.scale = Vector2(s, s)
 	$BG.position = screen * 0.5
 
@@ -128,10 +129,10 @@ func _on_video_finished() -> void:
 	var tween := create_tween()
 	tween.tween_interval(_current_pause)
 	tween.tween_property(overlay, "color:a", 1.0, FADE_DURATION)
-	tween.tween_callback(_return_to_study)
+	tween.tween_callback(_return_to_note_inside)
 
 
-# ===== 切回 Study =====
+# ===== 切回 note_inside（播完回到播放时的场景） =====
 
-func _return_to_study() -> void:
-	get_tree().change_scene_to_file(STUDY_SCENE)
+func _return_to_note_inside() -> void:
+	get_tree().change_scene_to_file(NOTE_INSIDE_SCENE)

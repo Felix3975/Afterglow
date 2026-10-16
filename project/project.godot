@@ -23,7 +23,6 @@ GameState="*res://autoload/game_state.tscn"
 [display]
 
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
 
 [editor]
 

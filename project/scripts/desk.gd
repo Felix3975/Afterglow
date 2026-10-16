@@ -2,44 +2,24 @@ extends Node2D
 
 const FADE_DURATION := 1.0
 const ENTRANCE_FADE_DURATION := 0.5
-const LETTER_PAUSE := 0.5
-const LETTER_MARGIN := 0.9
-const BEDROOM_SCENE := "res://scenes/main/bedroom.tscn"
+const KITE_PAUSE := 0.5
+const LIVINGROOM_SCENE := "res://scenes/main/livingroom.tscn"
+const DESK_SCENE := "res://scenes/livingroom/desk.tscn"
 
 # 各可点击物的 key（需与 GameState.STAGE_MEMORIES 中一致）
-const KEY_LETTER := "letter"
+const KEY_KITE := "kite"
 
 var _entrance_fading := true
 var _memory_started := false
-var _current_key := ""
-var _current_pause := 0.0
 
 
 func _ready() -> void:
-	# 信件等比缩放到屏幕能放得下，点击区与信件对齐
-	_fit_letter()
-	$ClickArea.mouse_entered.connect(_on_area_mouse_entered)
-	$ClickArea.mouse_exited.connect(_on_area_mouse_exited)
-	$ClickArea.input_event.connect(_on_click_input_event)
+	$KiteAreaRetail.mouse_entered.connect(_on_area_mouse_entered)
+	$KiteAreaRetail.mouse_exited.connect(_on_area_mouse_exited)
+	$KiteAreaRetail.input_event.connect(_on_kite_input_event)
 	$CapLayer/VideoPlayer.finished.connect(_on_video_finished)
 	$ButtonLayer/ReturnButton.pressed.connect(_on_return_button_pressed)
 	_fade_in()
-
-
-# ===== 信件缩放（放大环节） =====
-
-func _fit_letter() -> void:
-	var tex: Texture2D = $Letter.texture
-	if tex == null:
-		return
-	var screen := get_viewport_rect().size
-	var s := min(screen.x / tex.get_width(), screen.y / tex.get_height()) * LETTER_MARGIN
-	$Letter.scale = Vector2(s, s)
-	$Letter.position = screen * 0.5
-	$ClickArea.position = $Letter.position
-	var shape := RectangleShape2D.new()
-	shape.size = Vector2(tex.get_width(), tex.get_height()) * s
-	$ClickArea/CollisionShape2D.shape = shape
 
 
 # ===== 场景入场过渡 =====
@@ -56,6 +36,8 @@ func _fade_in() -> void:
 func _on_fade_in_finished() -> void:
 	_entrance_fading = false
 	$CapLayer/CapRemember.visible = false
+	# 本阶段记忆全部看完 → 触发阶段切换（最终阶段由 GameState 内部拦截，无任何反应）
+	GameState.check_and_start_stage_transition()
 
 
 # ===== 鼠标光标 =====
@@ -73,35 +55,37 @@ func _on_area_mouse_exited() -> void:
 func _on_return_button_pressed() -> void:
 	if _entrance_fading or _memory_started or GameState.is_transitioning():
 		return
-	get_tree().change_scene_to_file(BEDROOM_SCENE)
+	get_tree().change_scene_to_file(LIVINGROOM_SCENE)
 
 
-# ===== Click 点击处理 =====
+# ===== KiteAreaRetail 点击处理 =====
+# 点击区域与返回按钮重叠时，优先响应返回按钮，不响应 KiteAreaRetail
 
-func _on_click_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+func _on_kite_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_on_click_area_clicked()
+		var hovered := get_viewport().gui_get_hovered_control()
+		if hovered != null and ($ButtonLayer/ReturnButton == hovered or $ButtonLayer/ReturnButton.is_ancestor_of(hovered)):
+			return
+		_on_kite_clicked()
 
 
-func _on_click_area_clicked() -> void:
+func _on_kite_clicked() -> void:
 	if _entrance_fading or _memory_started or GameState.is_transitioning():
 		return
-	if not GameState.is_memory_enabled(KEY_LETTER):
+	if not GameState.is_memory_enabled(KEY_KITE):
 		GameState.show_notification(GameState.TEXT_NOT_IN_STAGE)
 		return
-	if GameState.is_memory_watched(KEY_LETTER):
+	if GameState.is_memory_watched(KEY_KITE):
 		GameState.show_notification(GameState.TEXT_WATCHED)
 		return
-	_play_memory_sequence(KEY_LETTER, LETTER_PAUSE)
+	_play_memory_sequence()
 
 
 # ===== 记忆视频播放序列 =====
-# 渐黑 → 显示视频并播放 → 渐透明 → [播完] → 停顿 → 渐黑 → 切回 Bedroom
+# 渐黑 → 显示视频并播放 → 渐透明 → [播完] → 停顿 0.5 秒 → 渐黑 → 切回 desk
 
-func _play_memory_sequence(key: String, pause_duration: float) -> void:
+func _play_memory_sequence() -> void:
 	_memory_started = true
-	_current_key = key
-	_current_pause = pause_duration
 	$ButtonLayer/ReturnButton.visible = false
 	var overlay: ColorRect = $CapLayer/CapRemember
 	overlay.visible = true
@@ -123,18 +107,18 @@ func _show_and_play_video() -> void:
 
 func _on_video_finished() -> void:
 	# 标记已观看
-	GameState.mark_watched(_current_key)
-	# 停顿 → 渐黑 → 切回 Bedroom
+	GameState.mark_watched(KEY_KITE)
+	# 停顿 → 渐黑 → 切回 desk（新场景再从黑屏渐入）
 	var overlay: ColorRect = $CapLayer/CapRemember
 	overlay.visible = true
 	overlay.color.a = 0.0
 	var tween := create_tween()
-	tween.tween_interval(_current_pause)
+	tween.tween_interval(KITE_PAUSE)
 	tween.tween_property(overlay, "color:a", 1.0, FADE_DURATION)
-	tween.tween_callback(_return_to_bedroom)
+	tween.tween_callback(_return_to_desk)
 
 
-# ===== 切回 Bedroom =====
+# ===== 切回 desk =====
 
-func _return_to_bedroom() -> void:
-	get_tree().change_scene_to_file(BEDROOM_SCENE)
+func _return_to_desk() -> void:
+	get_tree().change_scene_to_file(DESK_SCENE)

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dumdnbsgqoyiw"]
+
+[ext_resource type="Texture2D" uid="uid://cshu06050nefq" path="res://resources/photos/kite.png" id="1_w14h8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ckujq"]
+size = Vector2(54.696526, 198.28426)
+
+[node name="KiteArea" type="Area2D" unique_id=2052850926]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1814104597]
+texture = ExtResource("1_w14h8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=586815744]
+position = Vector2(-9.000019, 76.49998)
+scale = Vector2(27.68, 4.080001)
+shape = SubResource("RectangleShape2D_ckujq")

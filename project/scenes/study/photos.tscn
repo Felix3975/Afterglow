@@ -39,7 +39,7 @@ stream = ExtResource("2_spwv5")
 
 [node name="BG" type="Sprite2D" parent="." unique_id=547243117]
 position = Vector2(576, 324)
-scale = Vector2(0.5625, 0.5625)
+scale = Vector2(0.563, 0.563)
 texture = ExtResource("1_jy2in")
 
 [node name="ButtonLayer" type="CanvasLayer" parent="." unique_id=153077351]

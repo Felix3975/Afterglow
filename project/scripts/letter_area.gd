@@ -2,12 +2,12 @@ extends Node2D
 
 const FADE_DURATION := 1.0
 const ENTRANCE_FADE_DURATION := 0.5
-const PHOTO_PAUSE := 0.5
-const STUDY_SCENE := "res://scenes/main/study.tscn"
-const PHOTOS_SCENE := "res://scenes/study/photos.tscn"
+const LETTER_PAUSE := 0.5
+const LETTER_MARGIN := 0.9
+const BEDROOM_SCENE := "res://scenes/main/bedroom.tscn"
 
 # 各可点击物的 key（需与 GameState.STAGE_MEMORIES 中一致）
-const KEY_PHOTO := "photo"
+const KEY_LETTER := "letter"
 
 var _entrance_fading := true
 var _memory_started := false
@@ -16,12 +16,30 @@ var _current_pause := 0.0
 
 
 func _ready() -> void:
+	# 信件等比缩放到屏幕能放得下，点击区与信件对齐
+	_fit_letter()
 	$ClickArea.mouse_entered.connect(_on_area_mouse_entered)
 	$ClickArea.mouse_exited.connect(_on_area_mouse_exited)
 	$ClickArea.input_event.connect(_on_click_input_event)
 	$CapLayer/VideoPlayer.finished.connect(_on_video_finished)
 	$ButtonLayer/ReturnButton.pressed.connect(_on_return_button_pressed)
 	_fade_in()
+
+
+# ===== 信件缩放（放大环节） =====
+
+func _fit_letter() -> void:
+	var tex: Texture2D = $Letter.texture
+	if tex == null:
+		return
+	var screen := get_viewport_rect().size
+	var s: float = min(screen.x / tex.get_width(), screen.y / tex.get_height()) * LETTER_MARGIN
+	$Letter.scale = Vector2(s, s)
+	$Letter.position = screen * 0.5
+	$ClickArea.position = $Letter.position
+	var shape := RectangleShape2D.new()
+	shape.size = Vector2(tex.get_width(), tex.get_height()) * s
+	$ClickArea/CollisionShape2D.shape = shape
 
 
 # ===== 场景入场过渡 =====
@@ -38,8 +56,6 @@ func _fade_in() -> void:
 func _on_fade_in_finished() -> void:
 	_entrance_fading = false
 	$CapLayer/CapRemember.visible = false
-	# 本阶段记忆全部看完 → 触发阶段切换
-	GameState.check_and_start_stage_transition()
 
 
 # ===== 鼠标光标 =====
@@ -57,7 +73,7 @@ func _on_area_mouse_exited() -> void:
 func _on_return_button_pressed() -> void:
 	if _entrance_fading or _memory_started or GameState.is_transitioning():
 		return
-	get_tree().change_scene_to_file(STUDY_SCENE)
+	get_tree().change_scene_to_file(BEDROOM_SCENE)
 
 
 # ===== Click 点击处理 =====
@@ -70,17 +86,17 @@ func _on_click_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) 
 func _on_click_area_clicked() -> void:
 	if _entrance_fading or _memory_started or GameState.is_transitioning():
 		return
-	if not GameState.is_memory_enabled(KEY_PHOTO):
+	if not GameState.is_memory_enabled(KEY_LETTER):
 		GameState.show_notification(GameState.TEXT_NOT_IN_STAGE)
 		return
-	if GameState.is_memory_watched(KEY_PHOTO):
+	if GameState.is_memory_watched(KEY_LETTER):
 		GameState.show_notification(GameState.TEXT_WATCHED)
 		return
-	_play_memory_sequence(KEY_PHOTO, PHOTO_PAUSE)
+	_play_memory_sequence(KEY_LETTER, LETTER_PAUSE)
 
 
 # ===== 记忆视频播放序列 =====
-# 渐黑 → 显示视频并播放 → 渐透明 → [播完] → 停顿 → 渐黑 → 切回 photos
+# 渐黑 → 显示视频并播放 → 渐透明 → [播完] → 停顿 → 渐黑 → 切回 Bedroom
 
 func _play_memory_sequence(key: String, pause_duration: float) -> void:
 	_memory_started = true
@@ -108,17 +124,17 @@ func _show_and_play_video() -> void:
 func _on_video_finished() -> void:
 	# 标记已观看
 	GameState.mark_watched(_current_key)
-	# 停顿 → 渐黑 → 切回 photos
+	# 停顿 → 渐黑 → 切回 Bedroom
 	var overlay: ColorRect = $CapLayer/CapRemember
 	overlay.visible = true
 	overlay.color.a = 0.0
 	var tween := create_tween()
 	tween.tween_interval(_current_pause)
 	tween.tween_property(overlay, "color:a", 1.0, FADE_DURATION)
-	tween.tween_callback(_return_to_photos)
+	tween.tween_callback(_return_to_bedroom)
 
 
-# ===== 切回 Photos =====
+# ===== 切回 Bedroom =====
 
-func _return_to_photos() -> void:
-	get_tree().change_scene_to_file(PHOTOS_SCENE)
+func _return_to_bedroom() -> void:
+	get_tree().change_scene_to_file(BEDROOM_SCENE)

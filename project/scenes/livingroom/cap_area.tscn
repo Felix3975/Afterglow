@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://c0iausf13iwj5"]
 
 [ext_resource type="Texture2D" uid="uid://bo4jrinlkbuf3" path="res://resources/photos/cap1.png" id="1_tfsjf"]
+[ext_resource type="Texture2D" uid="uid://c5q3kb8abwdmk" path="res://resources/photos/cap2.png" id="2_2hl3k"]
+[ext_resource type="Texture2D" uid="uid://dx0apyb4yu3iv" path="res://resources/photos/cap3.png" id="3_x461l"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r67kn"]
 radius = 88.0
@@ -13,6 +15,16 @@ radius = 61.03278
 [node name="Cap1" type="Sprite2D" parent="." unique_id=1337039484]
 scale = Vector2(0.273, 0.32)
 texture = ExtResource("1_tfsjf")
+
+[node name="Cap2" type="Sprite2D" parent="." unique_id=475694101]
+visible = false
+scale = Vector2(0.273, 0.32)
+texture = ExtResource("2_2hl3k")
+
+[node name="Cap3" type="Sprite2D" parent="." unique_id=839187356]
+visible = false
+scale = Vector2(0.273, 0.32)
+texture = ExtResource("3_x461l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1160812700]
 position = Vector2(-1, -100)

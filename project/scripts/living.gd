@@ -4,13 +4,16 @@ const FADE_DURATION := 1.0
 const ENTRANCE_FADE_DURATION := 0.5
 # 各物体视频结束后的停顿时间
 const CAP_PAUSE := 0.5
-const FLOWER_PAUSE := 0.2
+const FLOWER_PAUSE := 0.5
+const CANDY_PAUSE := 0.5
 const LIVINGROOM_SCENE := "res://scenes/main/livingroom.tscn"
 const BEDROOM_SCENE := "res://scenes/main/bedroom.tscn"
+const DESK_SCENE := "res://scenes/livingroom/desk.tscn"
 
 # 各可点击物的 key（需与 GameState.STAGE_MEMORIES 中一致）
 const KEY_CAP := "cap"
 const KEY_FLOWER := "flower"
+const KEY_CANDY := "candy"
 
 var _entrance_fading := true
 var _memory_started := false
@@ -19,6 +22,24 @@ var _current_pause := 0.0
 
 
 func _ready() -> void:
+	# 按当前阶段显示对应背景
+	$livingroom1.visible = GameState.current_stage == 1
+	$livingroom2.visible = GameState.current_stage == 2
+	$livingroom3.visible = GameState.current_stage == 3
+	# 杯子随阶段换图
+	$CapArea/Cap1.visible = GameState.current_stage == 1
+	$CapArea/Cap2.visible = GameState.current_stage == 2
+	$CapArea/Cap3.visible = GameState.current_stage == 3
+	# Candy 只在阶段 2 可视（其余阶段连点都点不到）
+	var show_candy := GameState.current_stage == 2
+	$CandyArea.visible = show_candy
+	$CandyArea.input_pickable = show_candy
+	# Flower 只在阶段 1 可视可点（阶段 2 / 3 不可视且点不到）
+	var show_flower := GameState.current_stage == 1
+	$FlowerArea.visible = show_flower
+	$FlowerArea.input_pickable = show_flower
+	# DeskArea（风筝桌）只在阶段 3 可点击，点击直接进 desk 场景，无任何弹窗提示
+	$DeskArea.input_pickable = GameState.current_stage == 3
 	# ===== Cap1（杯子） =====
 	$CapArea.mouse_entered.connect(_on_area_mouse_entered)
 	$CapArea.mouse_exited.connect(_on_area_mouse_exited)
@@ -27,6 +48,14 @@ func _ready() -> void:
 	$FlowerArea.mouse_entered.connect(_on_area_mouse_entered)
 	$FlowerArea.mouse_exited.connect(_on_area_mouse_exited)
 	$FlowerArea.input_event.connect(_on_flower_input_event)
+	# ===== Candy（糖果） =====
+	$CandyArea.mouse_entered.connect(_on_area_mouse_entered)
+	$CandyArea.mouse_exited.connect(_on_area_mouse_exited)
+	$CandyArea.input_event.connect(_on_candy_input_event)
+	# ===== DeskArea（阶段 3 进入 desk 场景） =====
+	$DeskArea.mouse_entered.connect(_on_area_mouse_entered)
+	$DeskArea.mouse_exited.connect(_on_area_mouse_exited)
+	$DeskArea.input_event.connect(_on_desk_input_event)
 	# ===== 公共 =====
 	$CapLayer/VideoPlayer.finished.connect(_on_video_finished)
 	$ButtonLayer/BedroomButton.pressed.connect(_on_bedroom_button_pressed)
@@ -105,6 +134,34 @@ func _on_flower_clicked() -> void:
 		GameState.show_notification(GameState.TEXT_WATCHED)
 		return
 	_play_memory_sequence(KEY_FLOWER, FLOWER_PAUSE)
+
+
+# ===== Candy 点击处理（独立） =====
+
+func _on_candy_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		_on_candy_clicked()
+
+
+func _on_candy_clicked() -> void:
+	if _entrance_fading or _memory_started or GameState.is_transitioning():
+		return
+	if not GameState.is_memory_enabled(KEY_CANDY):
+		GameState.show_notification(GameState.TEXT_NOT_IN_STAGE)
+		return
+	if GameState.is_memory_watched(KEY_CANDY):
+		GameState.show_notification(GameState.TEXT_WATCHED)
+		return
+	_play_memory_sequence(KEY_CANDY, CANDY_PAUSE)
+
+
+# ===== DeskArea 点击 → 跳转 desk 场景（任何情况都无弹窗提示） =====
+
+func _on_desk_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if _entrance_fading or _memory_started or GameState.is_transitioning():
+			return
+		get_tree().change_scene_to_file(DESK_SCENE)
 
 
 # ===== 通用：记忆视频播放序列 =====

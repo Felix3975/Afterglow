@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://dgc1sj3nvtywv"]
+
+[ext_resource type="Texture2D" uid="uid://ja1qdhgneae1" path="res://resources/photos/bedroom2.png" id="1_41otv"]
+[ext_resource type="Texture2D" uid="uid://bkld0ib6xaduc" path="res://resources/photos/letter.png" id="2_8q5bo"]
+[ext_resource type="Script" uid="uid://gn5ic4k0fg6e" path="res://scripts/letter_scene.gd" id="3_script"]
+[ext_resource type="PackedScene" path="res://scenes/all/scene_button.tscn" id="4_btn"]
+
+[node name="LetterScene" type="Node2D" unique_id=1615855291]
+script = ExtResource("3_script")
+
+[node name="BG" type="Sprite2D" parent="." unique_id=538998208]
+position = Vector2(576.25604, 324.14404)
+scale = Vector2(0.56225, 0.56225)
+texture = ExtResource("1_41otv")
+
+[node name="BG2" type="ColorRect" parent="." unique_id=1340334932]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.61960787)
+
+[node name="Letter" type="Sprite2D" parent="." unique_id=1422346780]
+position = Vector2(574.99994, 308.99997)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("2_8q5bo")
+
+[node name="CapLayer" type="CanvasLayer" parent="." unique_id=1383548575]
+
+[node name="CapRemember" type="ColorRect" parent="CapLayer" unique_id=2068567587]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ButtonLayer" type="CanvasLayer" parent="." unique_id=992051176]
+
+[node name="ReturnButton" parent="ButtonLayer" unique_id=1719996659 instance=ExtResource("4_btn")]
+offset_left = 512.0
+offset_top = 580.0
+offset_right = 640.0
+offset_bottom = 630.0
+text = "返回"

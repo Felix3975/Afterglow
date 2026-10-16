@@ -12,8 +12,8 @@
 script = ExtResource("1_766gn")
 
 [node name="BG" type="Sprite2D" parent="." unique_id=552143800]
-position = Vector2(576.00006, 324)
-scale = Vector2(0.29999998, 0.3)
+position = Vector2(576, 324)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_766gn")
 
 [node name="StartButton" parent="." unique_id=1103047433 instance=ExtResource("3_wlmty")]

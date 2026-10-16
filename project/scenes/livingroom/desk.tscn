@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5gi4crpv02vn"]
+
+[ext_resource type="Texture2D" uid="uid://cb80urp41iunp" path="res://resources/photos/desk3.jpg" id="1_lvx8r"]
+[ext_resource type="PackedScene" uid="uid://dumdnbsgqoyiw" path="res://scenes/livingroom/kite_area.tscn" id="2_ehejb"]
+[ext_resource type="Script" path="res://scripts/desk.gd" id="3_script"]
+[ext_resource type="VideoStream" uid="uid://cxjekytuqcful" path="res://resources/video/instance2.ogv" id="4_video"]
+[ext_resource type="PackedScene" path="res://scenes/all/scene_button.tscn" id="5_btn"]
+
+[node name="Desk" type="Node2D" unique_id=88591682]
+script = ExtResource("3_script")
+
+[node name="BG" type="Sprite2D" parent="." unique_id=1680415529]
+position = Vector2(575.99994, 323.99994)
+scale = Vector2(0.6428571, 0.48214278)
+texture = ExtResource("1_lvx8r")
+
+[node name="KiteAreaRetail" parent="." unique_id=2052850926 instance=ExtResource("2_ehejb")]
+position = Vector2(587, 294.00003)
+scale = Vector2(0.7, 0.7)
+
+[node name="CapLayer" type="CanvasLayer" parent="."]
+
+[node name="CapRemember" type="ColorRect" parent="CapLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="CapLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("4_video")
+
+[node name="ButtonLayer" type="CanvasLayer" parent="."]
+
+[node name="ReturnButton" parent="ButtonLayer" instance=ExtResource("5_btn")]
+offset_left = 512.0
+offset_top = 580.0
+offset_right = 640.0
+offset_bottom = 630.0
+text = "返回"

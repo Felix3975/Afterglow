@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dkqm6egwpla74"]
 
-[ext_resource type="Texture2D" uid="uid://bieefbimk5y2a" path="res://resources/photos/mainbutton.png" id="1_psa64"]
+[ext_resource type="Texture2D" uid="uid://bbc65j7gr1cwb" path="res://resources/photos/mainbutton.png" id="1_psa64"]
 [ext_resource type="FontFile" uid="uid://cctvnsd137lm6" path="res://resources/font/乐米拾光手札体.ttf" id="2_r1a01"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ckujq"]
