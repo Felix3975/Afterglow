@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://b2dqhi55dxdf7"]
+
+[ext_resource type="Script" uid="uid://bpil24teepxoh" path="res://scripts/start.gd" id="1_766gn"]
+[ext_resource type="Texture2D" uid="uid://dffemecvuj648" path="res://resources/photos/start.png" id="2_766gn"]
+[ext_resource type="PackedScene" uid="uid://bncmtdo2n2y8i" path="res://scenes/start/start_button.tscn" id="3_wlmty"]
+[ext_resource type="PackedScene" uid="uid://dm33y2acmjn2a" path="res://scenes/start/setting_button.tscn" id="4_fijny"]
+[ext_resource type="PackedScene" uid="uid://dkqm6egwpla74" path="res://scenes/start/quit_button.tscn" id="5_nwbq8"]
+[ext_resource type="PackedScene" uid="uid://drq8bcpyb33ct" path="res://scenes/all/setting.tscn" id="6_qg2lk"]
+[ext_resource type="FontFile" uid="uid://cctvnsd137lm6" path="res://resources/font/乐米拾光手札体.ttf" id="7_hn7o5"]
+
+[node name="Start" type="Node2D" unique_id=1970668426]
+script = ExtResource("1_766gn")
+
+[node name="BG" type="Sprite2D" parent="." unique_id=552143800]
+position = Vector2(576, 324)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_766gn")
+
+[node name="StartButton" parent="." unique_id=1103047433 instance=ExtResource("3_wlmty")]
+position = Vector2(145, 370)
+scale = Vector2(1, 1)
+
+[node name="SettingButton" parent="." unique_id=172127897 instance=ExtResource("4_fijny")]
+position = Vector2(145, 460)
+scale = Vector2(1, 1)
+
+[node name="QuitButton" parent="." unique_id=296998637 instance=ExtResource("5_nwbq8")]
+position = Vector2(145, 550)
+scale = Vector2(1, 1)
+
+[node name="Setting" parent="." unique_id=74367412 instance=ExtResource("6_qg2lk")]
+visible = false
+
+[node name="FadeLayer" type="CanvasLayer" parent="." unique_id=621178391]
+
+[node name="Fade" type="ColorRect" parent="FadeLayer" unique_id=2012786591]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Name" type="Label" parent="." unique_id=237630475]
+offset_left = 80.0
+offset_top = 72.0
+offset_right = 305.0
+offset_bottom = 201.0
+theme_override_colors/font_color = Color(0.06937107, 0.12360228, 0.13893154, 1)
+theme_override_fonts/font = ExtResource("7_hn7o5")
+theme_override_font_sizes/font_size = 128
+text = "残光"

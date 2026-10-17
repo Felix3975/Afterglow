@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://jgcu2k4x0hiv"]
+
+[ext_resource type="Texture2D" uid="uid://dtyy2r4lrynlc" path="res://resources/photos/leture.png" id="1_abumj"]
+[ext_resource type="FontFile" uid="uid://cctvnsd137lm6" path="res://resources/font/乐米拾光手札体.ttf" id="2_epdq1"]
+[ext_resource type="Texture2D" uid="uid://bhv3waiw73m33" path="res://resources/icon/next_black.png" id="3_2vvl1"]
+[ext_resource type="Script" path="res://scripts/leture.gd" id="4_script"]
+
+[node name="Leture" type="Node2D" unique_id=1388873730]
+script = ExtResource("4_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1653764979]
+position = Vector2(576, 528)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("1_abumj")
+
+[node name="UserName" type="Label" parent="." unique_id=1836204536]
+offset_left = 200.0
+offset_top = 448.0
+offset_right = 240.0
+offset_bottom = 471.0
+scale = Vector2(1.1581116, 0.9846864)
+theme_override_colors/font_color = Color(0.07058824, 0.1254902, 0.13725491, 1)
+theme_override_fonts/font = ExtResource("2_epdq1")
+theme_override_font_sizes/font_size = 48
+text = "我"
+vertical_alignment = 1
+
+[node name="UserName2" type="Label" parent="." unique_id=524676991]
+visible = false
+offset_left = 200.0
+offset_top = 448.0
+offset_right = 240.0
+offset_bottom = 471.0
+scale = Vector2(1.1581116, 0.9846864)
+theme_override_colors/font_color = Color(0.07058824, 0.1254902, 0.13725491, 1)
+theme_override_fonts/font = ExtResource("2_epdq1")
+theme_override_font_sizes/font_size = 48
+text = "林晚秋"
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="." unique_id=1016191398]
+offset_left = 216.0
+offset_top = 496.0
+offset_right = 936.0
+offset_bottom = 600.0
+theme_override_colors/font_color = Color(0.07058824, 0.1254902, 0.13725491, 1)
+theme_override_fonts/font = ExtResource("2_epdq1")
+theme_override_font_sizes/font_size = 32
+text = "今天的天气不错啊，很适合出去走走。"
+vertical_alignment = 1
+
+[node name="Next" type="Sprite2D" parent="." unique_id=1662202144]
+visible = false
+position = Vector2(936, 592)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_2vvl1")
+
+[node name="ClickCatcher" type="Control" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 0
